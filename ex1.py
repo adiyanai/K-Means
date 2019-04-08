@@ -83,7 +83,7 @@ def main():
         for cent in initial_centroids:
             centroids.append(Centroid(cent))
 
-        print("K=", K, ":")
+        print("k=" + K.__str__() + ":")
         print("iter 0 :", end='')
         print_centroids_locations(centroids)
 
