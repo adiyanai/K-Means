@@ -1,7 +1,9 @@
 import math
 import numpy
+import numpy as np
 import init_centroids
 from scipy.misc import imread
+import matplotlib.pyplot as plt
 
 
 class Centroid:
@@ -46,6 +48,19 @@ class Centroid:
         # update the centroid location
         self._location = new_location
 
+    def print_cent(self):
+        cent = self.get_location()
+        if type(cent) == list:
+            cent = np.asarray(cent)
+        if len(cent.shape) == 1:
+            return ' '.join(str(np.floor(100 * cent) / 100).split()).replace('[ ', '[').replace('\n', ' ').replace(' ]',
+                                                                                                                   ']').replace(
+                ' ', ', ')
+        else:
+            return ' '.join(str(np.floor(100 * cent) / 100).split()).replace('[ ', '[').replace('\n', ' ').replace(' ]',
+                                                                                                                   ']').replace(
+                ' ', ', ')[1:-1]
+
 
 def distance(x1, x2):
     return math.sqrt(pow(x1[0]-x2[0], 2)+pow(x1[1]-x2[1], 2)+pow(x1[2]-x2[2], 2))
@@ -59,9 +74,39 @@ def print_centroids_locations(centroids):
             first = False
         else:
             print(", ", end='')
-        location_to_print = cent.get_floor_location()
-        print('[{0}, {1}, {2}]'.format(location_to_print[0], location_to_print[1], location_to_print[2]), end='')
+        location_to_print = cent.print_cent()
+        print(location_to_print, end='')
     print(flush=True)
+
+
+def display_image(X, centroids, img_size):
+
+        def calc_distance(p1, p2):
+            return math.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2 + (p1[2] - p2[2]) ** 2)
+
+        array = [c.get_location() for c in centroids]
+        B = []
+        # create the new picture array
+        for pixel in X:
+            smallestDist = calc_distance(pixel, array[0])
+            smallestIndex = 0
+            index = 0
+            # check witch centroid is the closest to the current pixel
+            for centroid in array:
+                dist = calc_distance(pixel, centroid)
+                if smallestDist > dist:
+                    smallestDist = dist
+                    smallestIndex = index
+                index += 1
+            B.append(array[smallestIndex])
+        B = np.array(B)
+        # plot the image
+        B = B * 255
+        B = B.astype(int)
+        Y = B.reshape(img_size[0], img_size[1], img_size[2])
+        plt.imshow(Y)
+        plt.grid(False)
+        plt.show()
 
 
 def main():
@@ -109,6 +154,9 @@ def main():
             # clear all the assigned pixels
             for cent in centroids:
                 cent.clear_pixels()
+
+        # displays photo at the end of iteration
+        display_image(X, centroids, img_size)
 
 
 main()
