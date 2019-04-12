@@ -120,16 +120,16 @@ def main():
     # run over all the K values
     for i in range(1, 5):
         # the K value
-        K = pow(2, i)
+        k = pow(2, i)
         # K centroids that are to be used in K-Means on the data set X
-        initial_centroids = init_centroids.init_centroids(X, K)
+        initial_centroids = init_centroids.init_centroids(X, k)
 
         centroids = []
         for cent in initial_centroids:
             centroids.append(Centroid(cent))
 
-        print("k=" + K.__str__() + ":")
-        print("iter 0 :", end='')
+        print("k=" + k.__str__() + ":")
+        print("iter 0:", end='')
         print_centroids_locations(centroids)
 
         for j in range(1, 11):
@@ -148,7 +148,7 @@ def main():
                 cent.update_location()
 
             # print centroids location
-            print("Iter", j, ":", end=" ")
+            print("iter " + "" + j.__str__() + ":", end='')
             print_centroids_locations(centroids)
 
             # clear all the assigned pixels
