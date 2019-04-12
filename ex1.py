@@ -63,7 +63,7 @@ class Centroid:
 
 
 def distance(x1, x2):
-    return math.sqrt(pow(x1[0]-x2[0], 2)+pow(x1[1]-x2[1], 2)+pow(x1[2]-x2[2], 2))
+    return pow(x1[0]-x2[0], 2)+pow(x1[1]-x2[1], 2)+pow(x1[2]-x2[2], 2)
 
 
 def print_centroids_locations(centroids):
@@ -156,8 +156,7 @@ def main():
                 cent.clear_pixels()
 
         # displays photo at the end of iteration
-        display_image(X, centroids, img_size)
+        # display_image(X, centroids, img_size)
 
 
 main()
-
