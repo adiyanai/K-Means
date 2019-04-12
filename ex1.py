@@ -1,5 +1,4 @@
 import math
-import numpy
 import numpy as np
 import init_centroids
 from scipy.misc import imread
@@ -16,14 +15,6 @@ class Centroid:
 
     def get_location(self):
         return self._location
-
-    def get_floor_location(self):
-        floor_location = [0, 0, 0]
-        # floor the location
-        floor_location[0] = numpy.floor(self._location[0] * 100) / 100
-        floor_location[1] = numpy.floor(self._location[1] * 100) / 100
-        floor_location[2] = numpy.floor(self._location[2] * 100) / 100
-        return floor_location
 
     def assign_pixel(self, pixel):
         self._assigned_pixels.append(pixel)
@@ -154,9 +145,6 @@ def main():
             # clear all the assigned pixels
             for cent in centroids:
                 cent.clear_pixels()
-
-        # displays photo at the end of iteration
-        # display_image(X, centroids, img_size)
 
 
 main()
